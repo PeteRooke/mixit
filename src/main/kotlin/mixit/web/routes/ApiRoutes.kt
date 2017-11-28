@@ -3,7 +3,7 @@ package mixit.web
 import mixit.web.handler.*
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.http.MediaType.*
+import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.web.reactive.function.server.router
 
 
@@ -11,6 +11,7 @@ import org.springframework.web.reactive.function.server.router
 class ApiRoutes(private val blogHandler: BlogHandler,
                 private val eventHandler: EventHandler,
                 private val talkHandler: TalkHandler,
+                private val favoriteHandler: FavoriteHandler,
                 private val userHandler: UserHandler) {
 
     @Bean
@@ -29,6 +30,9 @@ class ApiRoutes(private val blogHandler: BlogHandler,
             // Talks
             GET("/talk/{login}", talkHandler::findOne)
             GET("/{year}/talk", talkHandler::findByEventId)
+
+            GET("/favorites/{talktId}", favoriteHandler::getFavorite)
+            POST("/favorites/{talktId}/toggle", favoriteHandler::toggleFavorite)
 
             // users
             "/user".nest {

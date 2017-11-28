@@ -138,6 +138,7 @@ class AuthenticationHandler(private val userRepository: UserRepository,
                             } else {
                                 session.attributes["role"] = user.role
                                 session.attributes["username"] = email
+                                session.attributes["login"] = user.login
                                 session.attributes["token"] = token
                                 seeOther(URI("${properties.baseUri}/")).build()
                             }

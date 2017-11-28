@@ -9,13 +9,14 @@ import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.data.mongodb.core.remove
 import org.springframework.stereotype.Repository
 import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 
 @Repository
 class FavoriteRepository(private val template: ReactiveMongoTemplate) {
 
     fun findByUser(login: String): Flux<Favorite> = template.find<Favorite>(Query(Criteria.where("login").isEqualTo(login)))
 
-    fun findByTalkAndUser(login: String, talkId: String): Flux<Favorite> = template.find<Favorite>(Query(Criteria.where("login").isEqualTo(login)
+    fun findByTalkAndUser(login: String, talkId: String): Mono<Favorite> = template.findOne<Favorite>(Query(Criteria.where("login").isEqualTo(login)
             .andOperator(Criteria.where("talkId").isEqualTo(talkId))))
 
     fun save(favorite: Favorite) = template.save(favorite)

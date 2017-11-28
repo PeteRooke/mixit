@@ -49,7 +49,7 @@ class MixitWebFilter(val properties: MixitProperties, val userRepository: UserRe
                 val languageEn = exchange.request.uri.path.startsWith("/en/")
                 val uriPath = if (languageEn) exchange.request.uri.path.substring(3) else exchange.request.uri.path
 
-                // If url is securized we hav eto check the credentials information
+                // If url is securized we have to check the credentials information
                 if (startWithSecuredUrl(uriPath)) {
                     exchange.session.flatMap {
                         if (it.attributes["username"] != null && it.attributes["token"] != null) {
